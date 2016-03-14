@@ -8,10 +8,18 @@ import CardText from 'material-ui/lib/card/card-text';
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import SelectField from 'material-ui/lib/select-field';
-import Filter from './Filter';
-import AppNavBar from './AppNavBar';
+import {connect} from 'react-redux';
 
-export default class WeatherApp extends React.Component {
+function mapStateToProps(state) {
+  return {
+    pair: state.getIn(['vote', 'pair']),
+    winner: state.get('winner')
+  };
+}
+
+connect(mapStateToProps)(Temperature);
+
+export default class Temperatures extends React.Component {
 
   constructor(props) {
     super(props);
