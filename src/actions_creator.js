@@ -1,4 +1,4 @@
-export function setFilter(filter) {
+export function applyFilter(filter) {
   return {
     type: 'SET_FILTER',
     filter

@@ -8,18 +8,8 @@ import CardText from 'material-ui/lib/card/card-text';
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import SelectField from 'material-ui/lib/select-field';
-import {connect} from 'react-redux';
 
-function mapStateToProps(state) {
-  return {
-    pair: state.getIn(['vote', 'pair']),
-    winner: state.get('winner')
-  };
-}
-
-connect(mapStateToProps)(Temperature);
-
-export default class Temperatures extends React.Component {
+export default class Temperature extends React.Component {
 
   constructor(props) {
     super(props);
@@ -27,9 +17,13 @@ export default class Temperatures extends React.Component {
 
   render() {
     return (
-    <div className="app-container">
-      <AppNavBar/>
-      <Filter/>
-    </div>);
+      <div>
+        <Card className="card">
+          <CardText expandable={false}>
+            Temperatura
+          </CardText>
+        </Card>
+      </div>
+    );
   }
 }
