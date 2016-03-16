@@ -23,7 +23,7 @@ export default class WeatherApp extends Component {
     return (
     <div className="app-container">
       <AppNavBar/>
-      <Filter data={ statesCities }/>
+      <Filter cities={[]} data={ statesCities }/>
       <Temperature/>
     </div>);
   }

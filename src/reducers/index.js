@@ -16,9 +16,8 @@ function filter(state = initialState, action) {
 
 function temperatures(state = {
   isFetching: false,
-  temperature: {}
+  temperature: {previsoes: []}
 }, action) {
-  console.log('inside temperatures');
   switch (action.type) {
     case REQUEST_TEMPERATURE:
       return Object.assign({}, state, {

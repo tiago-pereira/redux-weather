@@ -17,14 +17,14 @@ class Temperature extends Component {
   }
 
   render() {
-    const { temperature } = this.props;
-    console.log(this.props);
+    const { temperatures } = this.props;
+
     return (
       <div>
         <Card className="card">
           <CardText expandable={false}>
             {
-              temperature.previsoes.map(function(previsao) {
+              temperatures.temperature.previsoes.map(function(previsao) {
                 return <div>{previsao.data}</div>
               })
             }
@@ -40,10 +40,10 @@ Temperature.propTypes = {
 }
 
 function mapStateToProps(state) {
-  const { temperature } = state;
-  console.log(state);
+  const { temperatures } = state;
+  
   return {
-    temperature
+    temperatures
   }
 }
 

@@ -20,9 +20,9 @@ function requestTemperature(filter) {
 
 function receiveTemperature(filter, json) {
   return {
-    type: RECEIVE_POSTS,
+    type: RECEIVE_TEMPERATURE,
     filter: filter,
-    temperature: json.data.children.map(child => child.data),
+    temperature: json,
     receivedAt: Date.now()
   }
 }
@@ -36,6 +36,7 @@ function fetchTemperature(filter) {
   }
 }
 
+//no cache needed
 export function fetchTemperatureIfNeeded(filter) {
   return (dispatch, getState) => {
     return dispatch(fetchTemperature(filter))
