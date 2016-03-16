@@ -1,4 +1,5 @@
 import React from 'react';
+import { fetchTemperatureIfNeeded } from '../actions'
 import AppBar from 'material-ui/lib/app-bar';
 import Card from 'material-ui/lib/card/card';
 import CardActions from 'material-ui/lib/card/card-actions';
@@ -9,29 +10,35 @@ import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import SelectField from 'material-ui/lib/select-field';
 import RaisedButton from 'material-ui/lib/raised-button';
+import { connect } from 'react-redux'
 
 const style = {
   margin: 12,
 };
 
-
-export default class Filter extends React.Component {
+class Filter extends React.Component {
 
   constructor(props) {
     super(props);
 
-    console.log(props);
-    this.state = {cities: [], estado: props.data.states.filter((v) => v.initials === 'SC')[0]};
-
-    this.changeEstado = this.changeEstado.bind(this);
+    this.handleRefreshClick = this.handleRefreshClick.bind(this);
   }
 
-  changeEstado(event) {
-    console.log(event.target.value.cities);
-    this.setState({estado: event.target.value, cities: event.target.value.cities});
+  handleRefreshClick(e) {
+    e.preventDefault()
+
+    const { dispatch, filter } = this.props;
+
+    dispatch(fetchTemperatureIfNeeded(filter))
+  }
+
+  handleChange(v) {
   }
 
   render() {
+    const { filter } = this.props;
+    console.log(filter);
+
     return (
       <Card className="card">
         <CardHeader
@@ -40,24 +47,44 @@ export default class Filter extends React.Component {
         actAsExpander={true}
         showExpandableButton={true}/>
         <CardText expandable={true}>
-          <select onChange={this.changeEstado}>
+          <select onChange={this.handleChange} value={filter.estado}>
             {
               this.props.data.states.map(function(item) {
-                return <option value={item}>{item.name}</option>
+                return <option readOnly={true} value={item}>{item.name}</option>
               })
             }
           </select>
 
-          <select>
+          <select onChange={this.handleChange} value={filter.cidade}>
             {
-              this.state.cities.map(function(city) {
-                return <option value={city}>{city}</option>
+              this.props.data.states.map(function(city) {
+                return <option readOnly={true} value='São Paulo'>São Paulo</option>
               })
             }
           </select>
 
-          <RaisedButton label="Buscar" style={style}/>
+          <a
+            onClick={this.handleRefreshClick}>
+            Atualizar
+          </a>
         </CardText>
       </Card>);
   }
 }
+
+Filter.propTypes = {
+  filter: React.PropTypes.shape({
+    estado: React.PropTypes.string,
+    cidade: React.PropTypes.string
+  })
+}
+
+function mapStateToProps(state) {
+  const { filter } = state;
+  console.log(state);
+  return {
+    filter
+  }
+}
+
+export default connect(mapStateToProps)(Filter)

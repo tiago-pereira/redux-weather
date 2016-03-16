@@ -11,14 +11,14 @@ export function selectFilter(filter) {
   }
 }
 
-function requestPosts(filter) {
+function requestTemperature(filter) {
   return {
     type: REQUEST_TEMPERATURE,
     filter
   }
 }
 
-function receivePosts(filter, json) {
+function receiveTemperature(filter, json) {
   return {
     type: RECEIVE_POSTS,
     filter: filter,
@@ -29,8 +29,8 @@ function receivePosts(filter, json) {
 
 function fetchTemperature(filter) {
   return dispatch => {
-    dispatch(requestPosts(reddit))
-    return fetch('http://developers.agenciaideias.com.br/tempo/json/${filter.cidade}-${filter.estado}')
+    dispatch(requestTemperature(filter))
+    return fetch('http://developers.agenciaideias.com.br/tempo/json/' + filter.cidade + '-' + filter.estado)
       .then(response => response.json())
       .then(json => dispatch(receiveTemperature(filter, json)))
   }
@@ -38,6 +38,6 @@ function fetchTemperature(filter) {
 
 export function fetchTemperatureIfNeeded(filter) {
   return (dispatch, getState) => {
-    return dispatch(fetchPosts(filter))
+    return dispatch(fetchTemperature(filter))
   }
 }

@@ -3,9 +3,9 @@ import {
   REQUEST_TEMPERATURE, RECEIVE_TEMPERATURE, SELECT_FILTER
 } from '../actions'
 
-const initialState = {filter: {cidade: 'Blumenau', estado: 'SC'}};
+const initialState = {cidade: 'São Paulo', estado: 'SP'};
 
-function selectFilter(state = initialState, action) {
+function filter(state = initialState, action) {
   switch (action.type) {
     case SELECT_FILTER:
       return action.filter
@@ -16,19 +16,17 @@ function selectFilter(state = initialState, action) {
 
 function temperatures(state = {
   isFetching: false,
-  didInvalidate: false,
   temperature: {}
 }, action) {
+  console.log('inside temperatures');
   switch (action.type) {
     case REQUEST_TEMPERATURE:
       return Object.assign({}, state, {
-        isFetching: true,
-        didInvalidate: false
+        isFetching: true
       })
     case RECEIVE_TEMPERATURE:
       return Object.assign({}, state, {
         isFetching: false,
-        didInvalidate: false,
         temperature: action.temperature,
         lastUpdated: action.receivedAt
       })
@@ -38,7 +36,7 @@ function temperatures(state = {
 }
 
 const rootReducer = combineReducers({
-  selectFilter,
+  filter,
   temperatures
 })
 
